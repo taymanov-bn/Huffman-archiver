@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "tree.h"
+#include "tree/tree.h"
 
 
 Node* create_node(unsigned char symbol, size_t freq, Node* left, Node* right) {
