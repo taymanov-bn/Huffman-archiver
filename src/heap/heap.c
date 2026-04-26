@@ -55,6 +55,10 @@ Node* get_min_heap(Heap* heap) {
   while (index < heap->size) {
     if ((index*2 + 1) >= heap->size && (index*2 + 2) >= heap->size) break;
 
+    if ((index * 2 + 1) >= heap->size) {
+      break;
+    }
+
     if ((index*2 + 1) < heap->size && (index*2 + 2) >= heap->size) {
       min_both = heap->arr[index*2 + 1];
       child_idx = index*2 + 1;
@@ -69,7 +73,7 @@ Node* get_min_heap(Heap* heap) {
       return min_node;
     }  
 
-    if (heap->arr[index*2 + 1]->frequence > heap->arr[index*2 + 2]->frequence) {
+    if ((index*2 + 2) < heap->size && heap->arr[index*2 + 1]->frequence > heap->arr[index*2 + 2]->frequence) {
       min_both = heap->arr[index*2 + 2];
       child_idx = index*2 + 2;
     } else {
