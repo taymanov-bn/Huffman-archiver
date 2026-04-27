@@ -31,4 +31,33 @@ Heap* heap_build_freq(int* freq) {
     return NULL;
   }
 
+  Heap* heap = create_heap();
+  int node_counter = 0;
+
+  if (!heap) {
+    return NULL;
+  }
+  
+  for (int i = 0; i < 256; i++) {
+    if (freq[i] > 0) {
+      Node* node = create_node(i, freq[i], NULL, NULL);
+      if (!node) {
+        free_heap(heap);
+        return NULL;
+      }
+      if (!add_heap(heap, node)) {
+        free_heap(heap);
+        return NULL;
+      }
+      node_counter++;
+    }
+  }
+
+  if (node_counter == 0) {
+    free_heap(heap);
+    return NULL;
+  }
+
+  return heap;
+
 } 
