@@ -2,6 +2,8 @@
 #include "tree/tree.h"
 #include "heap/heap.h"
 
+#define PARENT_SYMBOL 0
+
 int* frequence_counter(const char* filename) {
   unsigned char byte;
 
@@ -61,3 +63,52 @@ Heap* heap_build_freq(int* freq) {
   return heap;
 
 } 
+
+
+Node* build_huffman_tree(Heap* heap) {
+  if (!heap) {
+    return NULL;
+  }
+
+  while (heap->size > 1) {
+    Node* left_node = get_min_heap(heap);
+    if (!left_node) {
+      free_heap(heap);
+      return NULL;
+    }
+
+    Node* right_node = get_min_heap(heap);
+    if (!right_node) {
+      free_node(left_node);
+      free_heap(heap);
+      return NULL;
+    }
+    
+    Node* parent = create_node(PARENT_SYMBOL, left_node->frequency + right_node->frequency,
+                               left_node, right_node);
+    if (!parent) {
+      free_tree(left_node);
+      free_tree(right_node);
+      free_heap(heap);
+      return NULL;
+    }
+    if (!add_heap(heap, parent)) {
+      free_tree(left_node);
+      free_tree(right_node);
+      free_tree(parent);
+      free_heap(heap);
+      return NULL;
+    }
+
+  }
+
+  if (heap->size == 1) {
+    Node* huffman_tree = heap->arr[0];
+    free_heap(heap);
+    return huffman_tree;
+  }
+
+  return NULL;
+
+
+}
