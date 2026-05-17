@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "tree/tree.h"
 #include "heap/heap.h"
+#include <string.h>
 
 #define PARENT_SYMBOL 0
 
@@ -18,7 +19,7 @@ int* frequence_counter(const char* filename) {
     return NULL;
   }
 
-  while (fread(&byte, sizeof(char), 1, file) == 1) {
+  while (fread(&byte, sizeof(byte), 1, file) == 1) {
     freq_arr[byte]++;
   }
 
@@ -110,5 +111,36 @@ Node* build_huffman_tree(Heap* heap) {
 
   return NULL;
 
+
+}
+
+char* dfs_codes (node* root, char* buff, char** code, int* idx) {
+  if (!root) return NULL;
+
+  if (root-> left == NULL && root->right == NULL) {
+    if (!(code[root->symbol] = malloc(*idx + 1))) {
+      return NULL;
+    }
+    buff[*idx] = '\0';
+    memcpy(code[root->symbol], buff, *idx + 1);
+    return code[root->symbol];
+
+  }
+  buff[*idx] = '0';
+  *idx++;
+  dfs_codes(root->left, buff, code, idx);
+  *idx--;
+  buff[*idx] = '1';
+  dfs_codes(root->right, buff, code, idx);
+  *idx--;
+
+}
+
+char** symbols_code(Node* root) {
+  char** codes = calloc(256, sizeof(char*));
+  char buffer[256] = {};
+  int index = 0;
+  dfs_codes(root, buffer, codes, &index);
+  return codes;
 
 }
