@@ -4,6 +4,8 @@
 #include "tree/tree.h"
 #include "heap/heap.h"
 
-int* frequence_counter(const char* filename);
+int* frequency_counter(const char* filename);
 Heap* heap_build_freq(int* freq);
 Node* build_huffman_tree(Heap* heap);
+char* dfs_codes (node* root, char* buff, char** code, int* idx);
+char** symbols_code(Node* root);
