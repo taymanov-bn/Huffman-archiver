@@ -63,15 +63,12 @@ int encode(char* file_input, char* file_output) {
     symbol_code_size = strlen(code);
     
     for (int i = 0; i < symbol_code_size; i++) {
-      if (bit_count == 8) {
-        
         if (!fwrite(buffer_byte, sizeof(char), 1, out_file)) {
           free(freq);
           free_tree(tree);
           fclose(inp_file);
           fclose(out_file);
         };
-        
         bit_count = 0;
         buffer_byte = 0;
       }
