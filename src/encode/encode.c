@@ -50,7 +50,7 @@ int encode(char* file_input, char* file_output) {
     return -1;
   }
 
-  if(!fwrite(freq, sizeof(int), FREQUENCY_SIZE, out_file)) return -1;
+  if (!fwrite(freq, sizeof(int), FREQUENCY_SIZE, out_file)) return -1;
   
   uint8_t buffer_byte = 0;
   int bit_count = 0;
@@ -63,28 +63,20 @@ int encode(char* file_input, char* file_output) {
     symbol_code_size = strlen(code);
     
     for (int i = 0; i < symbol_code_size; i++) {
-        if (!fwrite(buffer_byte, sizeof(char), 1, out_file)) {
-          free(freq);
-          free_tree(tree);
-          fclose(inp_file);
-          fclose(out_file);
-        };
-        bit_count = 0;
-        buffer_byte = 0;
-      }
-     
-      buffer_byte = buffer_byte | ((code[i) - '0') << (7 - bit_count);
-      bit_count++;
+      if (!fwrite(buffer_byte, sizeof(char), 1, out_file)) {
+        free(freq);
+        free_tree(tree);
+        fclose(inp_file);
+        fclose(out_file);
+      };
+      bit_count = 0;
+      buffer_byte = 0;
     }
-
+     
+    buffer_byte = buffer_byte | ((code[i) - '0') << (7 - bit_count);
+    bit_count++;
   }
 
 
 
-  
-
-
-
-
-  return 0;
 }
