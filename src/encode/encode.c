@@ -55,7 +55,7 @@ int encode(char* file_input, char* file_output) {
   uint8_t buffer_byte = 0;
   int bit_count = 0;
   size_t symbol_code_size = 0;
-  char symbol;
+  unsigned char symbol;
 
   while (fread(&symbol, sizeof(char), 1, inp_file) == 1) {
     
@@ -63,19 +63,41 @@ int encode(char* file_input, char* file_output) {
     symbol_code_size = strlen(code);
     
     for (int i = 0; i < symbol_code_size; i++) {
-      if (!fwrite(buffer_byte, sizeof(char), 1, out_file)) {
-        free(freq);
-        free_tree(tree);
-        fclose(inp_file);
-        fclose(out_file);
-      };
-      bit_count = 0;
-      buffer_byte = 0;
+      if (bit_count == 8) {
+        if (!fwrite(&buffer_byte, sizeof(char), 1, out_file)) {
+          free(freq);
+          free_tree(tree);
+          free_codes(codes);
+          fclose(inp_file);
+          fclose(out_file);
+          return -1;
+        }
+        bit_count = 0;
+        buffer_byte = 0;
+      }
+      buffer_byte = buffer_byte | ((code[i] - '0') << (7 - bit_count));
+      bit_count++;
     }
-     
-    buffer_byte = buffer_byte | ((code[i) - '0') << (7 - bit_count);
-    bit_count++;
   }
+
+  if (bit_count > 0) {
+    if(!fwrite(&buffer_byte, sizeof(char), 1, out_file)) {
+      free(freq);
+      free_tree(tree);
+      free_codes(codes);
+      fclose(inp_file);
+      fclose(out_file);
+      return -1;
+    }
+  }
+
+  free(freq);
+  free_tree(tree);
+  free_codes(codes);
+  fclose(inp_file);
+  fclose(out_file);
+
+  return 0;
 
 
 

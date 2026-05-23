@@ -5,9 +5,4 @@
 
 int encode(char* file_input, char* file_output);
 
-
-
-
-
-
 #endif

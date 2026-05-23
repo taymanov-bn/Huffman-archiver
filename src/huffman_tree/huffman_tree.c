@@ -114,6 +114,19 @@ Node* build_huffman_tree(Heap* heap) {
 
 }
 
+void free_codes(char** codes) {
+  if (!codes) {
+    return;
+  }
+
+  for (int i = 0; i < 256; i++) {
+    if (codes[i]) {
+      free(codes[i]);
+    }
+  }
+  free(codes);
+}
+
 char* dfs_codes (node* root, char* buff, char** code, int* idx) {
   if (!root) return NULL;
 
