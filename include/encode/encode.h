@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-FILE* encode(char* file_input, char* file_output);
+int encode(char* file_input, char* file_output);
 
 
 
