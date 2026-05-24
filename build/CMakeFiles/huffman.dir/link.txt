@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,--dependency-file=CMakeFiles/huffman.dir/link.d CMakeFiles/huffman.dir/src/main.c.o -o huffman  libtree.a libheap.a libhuffman_tree.a libencode.a libdecode.a liberror.a libhuffman_tree.a libtree.a libheap.a liberror.a

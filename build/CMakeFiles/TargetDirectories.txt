@@ -1,0 +1,9 @@
+/home/taymanov-bn/coursework/Huffman-archiver/build/CMakeFiles/tree.dir
+/home/taymanov-bn/coursework/Huffman-archiver/build/CMakeFiles/heap.dir
+/home/taymanov-bn/coursework/Huffman-archiver/build/CMakeFiles/huffman_tree.dir
+/home/taymanov-bn/coursework/Huffman-archiver/build/CMakeFiles/encode.dir
+/home/taymanov-bn/coursework/Huffman-archiver/build/CMakeFiles/decode.dir
+/home/taymanov-bn/coursework/Huffman-archiver/build/CMakeFiles/error.dir
+/home/taymanov-bn/coursework/Huffman-archiver/build/CMakeFiles/huffman.dir
+/home/taymanov-bn/coursework/Huffman-archiver/build/CMakeFiles/edit_cache.dir
+/home/taymanov-bn/coursework/Huffman-archiver/build/CMakeFiles/rebuild_cache.dir

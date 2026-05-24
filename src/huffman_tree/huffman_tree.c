@@ -7,7 +7,7 @@
 
 #define PARENT_SYMBOL 0
 
-int* frequence_counter(const char* filename) {
+int* frequency_counter(const char* filename) {
   unsigned char byte;
 
   FILE* file = fopen(filename, "rb");
@@ -144,12 +144,14 @@ char* dfs_codes (Node* root, char* buff, char** code, int* idx) {
 
   }
   buff[*idx] = '0';
-  *idx++;
+  (*idx)++;
   dfs_codes(root->left, buff, code, idx);
-  *idx--;
+  (*idx)--;
   buff[*idx] = '1';
+  (*idx)++;
   dfs_codes(root->right, buff, code, idx);
-  *idx--;
+  (*idx)--;
+  return NULL;
 
 }
 

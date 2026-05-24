@@ -91,6 +91,7 @@ int decode (char* file_input, char* file_output) {
               return -1;
             }
             freq_counter--;
+            if (freq_counter == 0) break;
             current_node = tree;
           }
         }
@@ -109,11 +110,13 @@ int decode (char* file_input, char* file_output) {
               return -1;
             }
             freq_counter--;
+            if (freq_counter == 0) break;
             current_node = tree;
           }
         }
       }
-    } 
+    }
+    if (freq_counter == 0) break;
   }
   
   free(freq_arr);
