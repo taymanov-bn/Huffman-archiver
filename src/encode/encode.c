@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 #include "tree/tree.h"
 #include "heap/heap.h"
 #include "huffman_tree/huffman_tree.h"
