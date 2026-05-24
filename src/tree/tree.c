@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree/tree.h"
+#include "error/error.h"
 
 
 Node* create_node(unsigned char symbol, size_t freq, Node* left, Node* right) {
   Node* node = malloc(sizeof(struct Node));
-  if (!node)
+  if (!node) {
+    print_error("Failed to allocate memory for node");
     return NULL;
+  }
   
   node->symbol = symbol;
   node->frequency = freq;

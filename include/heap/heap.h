@@ -5,7 +5,7 @@
 
 
 typedef struct {
-  Node** heap;
+  Node** arr;
   int size;
 } Heap;
 
