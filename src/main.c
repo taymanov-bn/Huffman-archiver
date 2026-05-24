@@ -6,7 +6,7 @@
 #define INPUT_FILE argv[2]
 #define OUTPUT_FILE argv[3]
 
-int main (int argc, char** argv[]) {
+int main (int argc, char* argv[]) {
   if (argc != 4) {
     // too few argc
     return -1;
