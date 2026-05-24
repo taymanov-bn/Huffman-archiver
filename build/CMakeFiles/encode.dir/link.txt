@@ -1,2 +1,0 @@
-/usr/bin/ar qc libencode.a CMakeFiles/encode.dir/src/encode/encode.c.o
-/usr/bin/ranlib libencode.a

@@ -1,2 +1,0 @@
-/usr/bin/ar qc libhuffman_tree.a CMakeFiles/huffman_tree.dir/src/huffman_tree/huffman_tree.c.o
-/usr/bin/ranlib libhuffman_tree.a
