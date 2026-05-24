@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "tree/tree.h"
 #include "heap/heap.h"
+#include "error/error.h"
 
 #define HEAP_CAPACITY 256
 
@@ -9,11 +10,13 @@ Heap* create_heap() {
   Heap* heap;
   heap = malloc(sizeof(Heap));
   if (!heap) {
+    print_error("Failed to allocate memory for heap");
     return NULL;
   }
   heap->arr = malloc(sizeof(Node*)*HEAP_CAPACITY);
   if (!heap->arr) {
     free(heap);
+    print_error("Failed to allocate memory for heap array");
     return NULL;
   }
   heap->size = 0;
@@ -21,8 +24,10 @@ Heap* create_heap() {
 }
 
 void add_heap(Heap* heap, Node* node) {
-  if (heap->size >= HEAP_CAPACITY) 
+  if (heap->size >= HEAP_CAPACITY) {
+    print_error("Heap is full");
     return;
+  }
   heap->arr[heap->size] = node;
   if (heap->size > 0) {  
     int index = heap->size;

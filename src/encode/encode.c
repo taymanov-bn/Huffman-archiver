@@ -3,6 +3,7 @@
 #include "tree/tree.h"
 #include "heap/heap.h"
 #include "huffman_tree/huffman_tree.h"
+#include "error/error.h"
 
 #define FREQUENCY_SIZE 256
 
@@ -50,7 +51,10 @@ int encode(char* file_input, char* file_output) {
     return -1;
   }
 
-  if (!fwrite(freq, sizeof(int), FREQUENCY_SIZE, out_file)) return -1;
+  if (!fwrite(freq, sizeof(int), FREQUENCY_SIZE, out_file)) {
+    print_error("Failed to write frequency table");
+    return -1;
+  }
   
   uint8_t buffer_byte = 0;
   int bit_count = 0;
@@ -59,7 +63,7 @@ int encode(char* file_input, char* file_output) {
 
   while (fread(&symbol, sizeof(char), 1, inp_file) == 1) {
     
-    unsigned char* code = codes[symbol];
+    char* code = codes[symbol];
     symbol_code_size = strlen(code);
     
     for (int i = 0; i < symbol_code_size; i++) {
@@ -70,6 +74,7 @@ int encode(char* file_input, char* file_output) {
           free_codes(codes);
           fclose(inp_file);
           fclose(out_file);
+          print_error("Failed to write compressed data");
           return -1;
         }
         bit_count = 0;
@@ -87,6 +92,7 @@ int encode(char* file_input, char* file_output) {
       free_codes(codes);
       fclose(inp_file);
       fclose(out_file);
+      print_error("Failed to write last byte");
       return -1;
     }
   }
@@ -98,7 +104,4 @@ int encode(char* file_input, char* file_output) {
   fclose(out_file);
 
   return 0;
-
-
-
 }

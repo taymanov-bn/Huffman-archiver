@@ -2,6 +2,7 @@
 #include "tree/tree.h"
 #include "heap/heap.h"
 #include <string.h>
+#include "error/error.h"
 
 #define PARENT_SYMBOL 0
 
@@ -10,12 +11,14 @@ int* frequence_counter(const char* filename) {
 
   FILE* file = fopen(filename, "rb");
   if (!file) {
+    print_error("Failed to open file for frequency counting");
     return NULL;
   }
 
   int* freq_arr = calloc(256, sizeof(int));
 
   if (!freq_arr) {
+    print_error("Failed to allocate memory for frequency array");
     return NULL;
   }
 
@@ -31,6 +34,7 @@ int* frequence_counter(const char* filename) {
 
 Heap* heap_build_freq(int* freq) {
   if (!freq) {
+    print_error("Invalid frequency array");
     return NULL;
   }
 
@@ -48,16 +52,14 @@ Heap* heap_build_freq(int* freq) {
         free_heap(heap);
         return NULL;
       }
-      if (!add_heap(heap, node)) {
-        free_heap(heap);
-        return NULL;
-      }
+      add_heap(heap, node);
       node_counter++;
     }
   }
 
   if (node_counter == 0) {
     free_heap(heap);
+    print_error("Empty file or no valid symbols");
     return NULL;
   }
 
@@ -68,6 +70,7 @@ Heap* heap_build_freq(int* freq) {
 
 Node* build_huffman_tree(Heap* heap) {
   if (!heap) {
+    print_error("Invalid heap");
     return NULL;
   }
 
@@ -75,13 +78,15 @@ Node* build_huffman_tree(Heap* heap) {
     Node* left_node = get_min_heap(heap);
     if (!left_node) {
       free_heap(heap);
+      print_error("Failed to get min node from heap");
       return NULL;
     }
 
     Node* right_node = get_min_heap(heap);
     if (!right_node) {
-      free_node(left_node);
+      free_tree(left_node);
       free_heap(heap);
+      print_error("Failed to get min node from heap");
       return NULL;
     }
     
@@ -91,15 +96,11 @@ Node* build_huffman_tree(Heap* heap) {
       free_tree(left_node);
       free_tree(right_node);
       free_heap(heap);
+      print_error("Failed to create parent node");
       return NULL;
     }
-    if (!add_heap(heap, parent)) {
-      free_tree(left_node);
-      free_tree(right_node);
-      free_tree(parent);
-      free_heap(heap);
-      return NULL;
-    }
+
+    add_heap(heap, parent);
 
   }
 
@@ -108,7 +109,8 @@ Node* build_huffman_tree(Heap* heap) {
     free_heap(heap);
     return huffman_tree;
   }
-
+  
+  print_error("Failed to build huffman tree");
   return NULL;
 
 
@@ -127,11 +129,12 @@ void free_codes(char** codes) {
   free(codes);
 }
 
-char* dfs_codes (node* root, char* buff, char** code, int* idx) {
+char* dfs_codes (Node* root, char* buff, char** code, int* idx) {
   if (!root) return NULL;
 
   if (root-> left == NULL && root->right == NULL) {
     if (!(code[root->symbol] = malloc(*idx + 1))) {
+      print_error("Failed to allocate memory for symbol code");
       return NULL;
     }
     buff[*idx] = '\0';
@@ -151,6 +154,10 @@ char* dfs_codes (node* root, char* buff, char** code, int* idx) {
 
 char** symbols_code(Node* root) {
   char** codes = calloc(256, sizeof(char*));
+  if (!codes) {
+    print_error("Failed to allocate memory for codes table");
+    return NULL;
+  }
   char buffer[256] = {};
   int index = 0;
   dfs_codes(root, buffer, codes, &index);

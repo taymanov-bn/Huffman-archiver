@@ -3,23 +3,32 @@
 #include "huffman_tree/huffman_tree.h"
 #include "heap/heap.h"
 #include "tree/tree.h"
+#include "error/error.h"
 
 #define FREQUENCY_SIZE 256
 
 int decode (char* file_input, char* file_output) {
-  if (!file_input || !file_output) return -1;
+  if (!file_input || !file_output) {
+    print_error("Files are not provided");
+    return -1;
+  }
 
   FILE* inp_file = fopen(file_input, "rb");
-  if (!inp_file) return -1;
+  if (!inp_file) {
+    print_error("Invalid input file path");
+    return -1;
+  }
 
   FILE* out_file = fopen(file_output, "wb");
   if (!out_file) {
     fclose(inp_file);
+    print_error("Invalid output file path");
     return -1;
   }
 
   int* freq_arr = calloc(256, sizeof(int));
   if (!freq_arr) {
+    print_error("Failed to allocate memory for frequency array during decoding");
     fclose(inp_file);
     fclose(out_file);
     return -1;
@@ -29,6 +38,7 @@ int decode (char* file_input, char* file_output) {
     free(freq_arr);
     fclose(inp_file);
     fclose(out_file);
+    print_error("Failed to read frequency table to freq array");
     return -1;
   }
 
@@ -76,6 +86,7 @@ int decode (char* file_input, char* file_output) {
               free_tree(tree);
               fclose(inp_file);
               fclose(out_file);
+              print_error("Failed to write decoded data");
               return -1;
             }
             freq_counter--;
@@ -93,6 +104,7 @@ int decode (char* file_input, char* file_output) {
               free_tree(tree);
               fclose(inp_file);
               fclose(out_file);
+              print_error("Failed to write decoded data");
               return -1;
             }
             freq_counter--;
