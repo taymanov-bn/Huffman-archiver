@@ -1,4 +1,5 @@
 #include <string.h>
+#include "error/error.h"
 #include "decode/decode.h"
 #include "encode/encode.h"
 
@@ -8,12 +9,12 @@
 
 int main (int argc, char* argv[]) {
   if (argc != 4) {
-    // too few argc
+    print_error("Invalid number of arguments");
     return -1;
   }
 
   if (strcmp(FLAG, "-e") != 0 && strcmp(FLAG, "-d") != 0) {
-    // invalid argument
+    print_error("Invalid flag argument");
     return -2;
   }
 
