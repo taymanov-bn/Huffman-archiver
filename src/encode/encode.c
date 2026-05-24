@@ -59,7 +59,7 @@ int encode(char* file_input, char* file_output) {
 
   while (fread(&symbol, sizeof(char), 1, inp_file) == 1) {
     
-    char* code = codes[symbol];
+    unsigned char* code = codes[symbol];
     symbol_code_size = strlen(code);
     
     for (int i = 0; i < symbol_code_size; i++) {

@@ -49,9 +49,64 @@ int decode (char* file_input, char* file_output) {
     return -1;
   }
 
+  unsigned char byte = 0;
+  uint8_t buffer_byte = 0;
+  int freq_counter = 0;
+
+  for (int i = 0; i < 256; i++) {
+    if (freq_arr[i] > 0) freq_counter += freq_arr[i];
+  }
+
+  Node* current_node = tree;
 
 
+  while (fread(&byte, sizeof(char), 1, inp_file) == 1) {
+    if (freq_counter == 0) break;
 
+    for (int i = 0; i < 8; i++) {
 
+      buffer_byte = (byte >> (7 - i)) & 1;
+
+      if (buffer_byte == 0) {
+        if (current_node->left != NULL) {
+          current_node = current_node->left;
+          if (current_node->left == NULL && current_node->right == NULL){
+            if (!fwrite(&current_node->symbol, sizeof(char), 1, out_file)) {
+              free(freq_arr);
+              free_tree(tree);
+              fclose(inp_file);
+              fclose(out_file);
+              return -1;
+            }
+            freq_counter--;
+            current_node = tree;
+          }
+        }
+      }
+
+      if (buffer_byte == 1) {
+        if (current_node->right != NULL) {
+          current_node = current_node->right;
+          if (current_node->left == NULL && current_node->right == NULL){
+            if (!fwrite(&current_node->symbol, sizeof(char), 1, out_file)) {
+              free(freq_arr);
+              free_tree(tree);
+              fclose(inp_file);
+              fclose(out_file);
+              return -1;
+            }
+            freq_counter--;
+            current_node = tree;
+          }
+        }
+      }
+    } 
+  }
+  
+  free(freq_arr);
+  free_tree(tree);
+  fclose(inp_file);
+  fclose(out_file);
+  return 0;
 
 }
