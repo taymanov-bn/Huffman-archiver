@@ -10,3 +10,5 @@ Node* build_huffman_tree(Heap* heap);
 char* dfs_codes (Node* root, char* buff, char** code, int* idx);
 void free_codes(char** codes);
 char** symbols_code(Node* root);
+
+#endif
