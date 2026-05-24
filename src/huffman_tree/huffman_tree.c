@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "tree/tree.h"
 #include "heap/heap.h"
 #include <string.h>
