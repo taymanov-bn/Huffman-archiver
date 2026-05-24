@@ -42,3 +42,5 @@ target_include_directories(error PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
 add_executable(huffman src/main.c)
 target_link_libraries(huffman tree heap huffman_tree encode decode error)
+target_link_libraries(encode huffman_tree tree heap error)
+target_link_libraries(decode huffman_tree tree heap error)
