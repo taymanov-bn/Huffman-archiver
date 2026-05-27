@@ -46,6 +46,7 @@ int main() {
   Heap* single_heap = create_heap();
   Node* single_node = create_node('a', 4, NULL, NULL);
   test_add_heap(single_heap, single_node);
+  free_tree(single_node);
 
   // проверка get_min_heap
   Heap* heap = create_heap();

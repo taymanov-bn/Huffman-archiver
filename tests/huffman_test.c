@@ -125,6 +125,7 @@ int main() {
   freq_heap['b'] = 7;
   freq_heap['c'] = 2;
   test_heap_build_freq(freq_heap);
+  free(freq_heap);
 
   // тест test_build_huffman_tree
     
