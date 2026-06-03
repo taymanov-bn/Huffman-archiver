@@ -4,6 +4,8 @@ project(huffman-archiver C)
 
 set(CMAKE_C_STANDARD 99)
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address,undefined -g")
+
 add_library(tree
     src/tree/tree.c
 )
@@ -45,3 +47,22 @@ target_link_libraries(huffman tree heap huffman_tree encode decode error)
 target_link_libraries(encode huffman_tree tree heap error)
 target_link_libraries(decode huffman_tree tree heap error)
 target_link_libraries(huffman_tree tree heap error)
+
+add_executable(tree_test tests/tree_test.c)
+target_link_libraries(tree_test tree error)
+
+add_executable(heap_test tests/heap_test.c)
+target_link_libraries(heap_test tree heap error)
+
+add_executable(huffman_test tests/huffman_test.c)
+target_link_libraries(huffman_test tree heap huffman_tree)
+
+add_executable(encode_decode_test tests/encode_decode_test.c)
+target_link_libraries(encode_decode_test encode decode)
+
+enable_testing()
+
+add_test(NAME tree_test COMMAND tree_test)
+add_test(NAME heap_test COMMAND heap_test)
+add_test(NAME huffman_test COMMAND huffman_test)
+add_test(NAME encode_decode_test COMMAND encode_decode_test)
