@@ -1,0 +1,30 @@
+name: archiver-CI
+
+on:
+  push:
+    branches: [main, work]
+  pull_request:
+    branches: [main]
+
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install dependencies
+        run: sudo apt-get install -y cmake gcc
+
+      - name: build
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
+
+      - name: test
+        run: |
+          cd build
+          ctest --output-on-failure
