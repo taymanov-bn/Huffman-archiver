@@ -4,9 +4,9 @@
 #include "tree/tree.h"
 
 
-typedef struct {
-  Node** arr;
-  int size;
+typedef struct { // структура кучи 
+  Node** arr; // массив узлов 
+  int size; // размер кучи (массива) 
 } Heap;
 
 Heap* create_heap();
