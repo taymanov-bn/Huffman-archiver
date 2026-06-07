@@ -21,7 +21,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake ..
+          cmake .. -DCMAKE_C_FLAGS="-fsanitize=address -g"
           make
 
       - name: test
@@ -42,7 +42,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. -DCMAKE_C_FLAGS=""
+          cmake ..
           make
 
       - name: run valgrind
