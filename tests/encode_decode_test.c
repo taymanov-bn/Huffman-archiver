@@ -4,10 +4,15 @@
 #include <string.h>
 #include "encode/encode.h"
 #include "decode/decode.h"
+#include "error/error.h"
 
 void test_encode_decode() {
     // создаём тестовый файл
     FILE* file_test = fopen("test_input.txt", "w");
+    if (!file_test) {
+        print_error("Failed to open test file");
+        return;
+    }
     fprintf(file_test, "hello world this is a huffman test");
     fclose(file_test);
     

@@ -58,7 +58,7 @@ add_executable(huffman_test tests/huffman_test.c)
 target_link_libraries(huffman_test tree heap huffman_tree)
 
 add_executable(encode_decode_test tests/encode_decode_test.c)
-target_link_libraries(encode_decode_test encode decode)
+target_link_libraries(encode_decode_test encode decode error)
 
 enable_testing()
 
