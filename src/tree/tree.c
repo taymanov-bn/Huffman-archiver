@@ -5,13 +5,15 @@
 
 
 Node* create_node(unsigned char symbol, size_t freq, Node* left, Node* right) {
-  Node* node = malloc(sizeof(struct Node));
+  Node* node = malloc(sizeof(struct Node)); // выделение памяти для узла
   if (!node) {
+    // проверка на выделение памяти, если не выделилось - возврощаю ошибку
     print_error("Failed to allocate memory for node");
     return NULL;
   }
   
-  node->symbol = symbol;
+  // после выделения памяти и проверки, присваиваем полученные на вход данные этому узлу 
+  node->symbol = symbol; 
   node->frequency = freq;
   node->left = left;
   node->right = right;
@@ -19,11 +21,11 @@ Node* create_node(unsigned char symbol, size_t freq, Node* left, Node* right) {
 
 }
 
-void free_tree(Node* tree) {
+void free_tree(Node* tree) { // освобождение памяти дерева
   if (!tree) {
     return;
   }
-  
+  // дальше проверка на детей, если они есть, то через рекурсию освобождаем память и для детей 
   if (tree->left != NULL || tree->right != NULL) {
     if (tree->left != NULL) {
       free_tree(tree->left);
@@ -33,6 +35,6 @@ void free_tree(Node* tree) {
     }
   }
 
-  free(tree);
+  free(tree); // в конце освобождаем корень дерева 
 
 }
