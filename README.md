@@ -1,6 +1,6 @@
 # Huffman Archiver
 
-![CI](https://github.com/taymanov-bn/uffman-archiver/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/taymanov-bn/Huffman-archiver/actions/workflows/ci.yml/badge.svg)
 
 Консольный архиватор файлов на основе алгоритма Хаффмана. Поддерживает сжатие и разжатие произвольных файлов.
 
