@@ -4,8 +4,6 @@ project(huffman-archiver C)
 
 set(CMAKE_C_STANDARD 99)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address,undefined -g")
-
 add_library(tree
     src/tree/tree.c
 )
