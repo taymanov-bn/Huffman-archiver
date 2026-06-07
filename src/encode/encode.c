@@ -10,8 +10,10 @@
 #define FREQUENCY_SIZE 256 // размер массива частот 
 
 int encode(char* file_input, char* file_output) { // функция для кодирования файла 
-  if (!file_input || !file_output) return -1; // проверка входных данных 
-
+  if (!file_input || !file_output) { // проверка входных данных 
+    print_error("Files are not provided");
+    return -1;
+  }  
   FILE* inp_file = fopen(file_input, "rb"); // открываем входной файл для чтения в бинарном режиме 
   if (!inp_file) return -1; // проверка получилось ли открыть файл 
 
