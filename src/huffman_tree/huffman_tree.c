@@ -21,6 +21,7 @@ int* frequency_counter(const char* filename) { // функция по подсч
   if (!freq_arr) {
     // проверка на выделение памяти 
     print_error("Failed to allocate memory for frequency array");
+    fclose(file);
     return NULL;
   }
 
