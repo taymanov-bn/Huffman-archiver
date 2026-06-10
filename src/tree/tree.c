@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Taymanov Balkan
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree/tree.h"
