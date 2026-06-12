@@ -7,7 +7,7 @@
 #include "error/error.h"
 
 
-Node* create_node(unsigned char symbol, size_t freq, Node* left, Node* right) {
+Node* create_node(unsigned char symbol, size_t frequency, Node* left, Node* right) {
   Node* node = malloc(sizeof(struct Node)); // выделение памяти для узла
   if (!node) {
     // проверка на выделение памяти, если не выделилось - возврощаю ошибку
@@ -17,7 +17,7 @@ Node* create_node(unsigned char symbol, size_t freq, Node* left, Node* right) {
   
   // после выделения памяти и проверки, присваиваем полученные на вход данные этому узлу 
   node->symbol = symbol; 
-  node->frequency = freq;
+  node->frequency = frequency;
   node->left = left;
   node->right = right;
   return node;
