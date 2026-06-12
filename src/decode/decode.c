@@ -33,7 +33,7 @@ int decode (char* file_input, char* file_output) {
   }
 
   int* frequency_array = calloc(256, sizeof(int)); // создаем массив частот и выделяем для него память и сразу обнуляем  
-  if (!freq_arr) {
+  if (!frequency_array) {
     // проверка на выделение памяти для массива частот 
     print_error("Failed to allocate memory for frequency array during decoding");
     fclose(inp_file);
@@ -73,7 +73,7 @@ int decode (char* file_input, char* file_output) {
   int frequency_counter = 0; // подсчет общего количества символов чтобы в конце понять, когда остановиться
 
   for (int i = 0; i < 256; i++) {
-    if (frequency_arr[i] > 0) frequency_counter += freq_arr[i]; // подсчет всех частот 
+    if (frequency_array[i] > 0) frequency_counter += frequency_array[i]; // подсчет всех частот 
   }
 
   Node* current_node = tree; // переменная текущего узла в дереве  
