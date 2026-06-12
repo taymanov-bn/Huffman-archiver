@@ -13,7 +13,7 @@ stats = df.groupby(["file", "type", "original_size", "compressed_size"]).agg(
     decode_std=("decode_time", "std")
 ).reset_index()
 
-stats["compression_ratio"] = stats["compressed_size"] / stats["original_size"] * 100
+stats["compression_ratio"] = (1 - stats["compressed_size"] / stats["original_size"]) * 100
 
 print(stats)
 
