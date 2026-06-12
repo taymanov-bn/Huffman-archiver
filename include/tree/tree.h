@@ -12,7 +12,7 @@ typedef struct Node { // структура узла
   struct Node* right; // правый ребенок 
 } Node;
 
-Node* create_node(unsigned char symbol, size_t freq, Node* left, Node* right); 
+Node* create_node(unsigned char symbol, size_t frequency, Node* left, Node* right); 
 void free_tree(Node* tree);
 
 #endif

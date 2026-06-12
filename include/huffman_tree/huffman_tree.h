@@ -8,9 +8,9 @@
 #include "heap/heap.h"
 
 int* frequency_counter(const char* filename);
-Heap* heap_build_freq(int* freq);
+Heap* heap_build_freq(int* frequency);
 Node* build_huffman_tree(Heap* heap);
-char* dfs_codes (Node* root, char* buff, char** code, int* idx);
+char* dfs_codes (Node* root, char* buffer, char** code, int* index);
 void free_codes(char** codes);
 char** symbols_code(Node* root);
 
