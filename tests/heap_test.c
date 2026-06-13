@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include "heap/heap.h"
-#include "tree/tree.h"
+#include "heap.h"
+#include "tree.h"
 #include <assert.h>
 
-void test_create_heap () {
+void test_create_heap() {
   Heap* heap = create_heap();
   int result = (heap != NULL);
   free_heap(heap);
@@ -32,35 +32,29 @@ void test_get_min_heap(Heap* heap) {
   
   free_heap(heap);
   free_tree(min_node);
-  
 
   assert(result);
   printf("test_get_min_heap PASSED \n");
 }
 
 int main() {
-  // создание кучи
   test_create_heap();
 
-  // создание кучи и узла и провека добавки узла в кучу
   Heap* single_heap = create_heap();
   Node* single_node = create_node('a', 4, NULL, NULL);
   test_add_heap(single_heap, single_node);
   free_tree(single_node);
 
-  // проверка get_min_heap
   Heap* heap = create_heap();
   Node* node1 = create_node('a', 3, NULL, NULL);
   Node* node2 = create_node('d', 5, NULL, NULL);
   Node* node3 = create_node('j', 8, NULL, NULL);
   Node* node4 = create_node('q', 9, NULL, NULL);
   Node* arr[] = {node1, node2, node3, node4};
-  
+
   for (int i = 0; i < sizeof(arr) / sizeof(arr[0]); i++) {
     add_heap(heap, arr[i]);
   }
-
   test_get_min_heap(heap);
-
   return 0;
 }

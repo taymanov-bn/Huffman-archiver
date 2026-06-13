@@ -1,13 +1,13 @@
 #include <string.h>
-#include "error/error.h"
-#include "decode/decode.h"
-#include "encode/encode.h"
+#include "error.h"
+#include "decode.h"
+#include "encode.h"
 
 #define FLAG argv[1]
 #define INPUT_FILE argv[2]
 #define OUTPUT_FILE argv[3]
 
-int main (int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
   if (argc != 4) {
     print_error("Invalid number of arguments");
     return -1;
@@ -26,5 +26,4 @@ int main (int argc, char* argv[]) {
   }
 
   return 0;
-  
 }

@@ -3,39 +3,40 @@ cmake_minimum_required(VERSION 3.17)
 project(huffman-archiver C)
 
 set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_FLAGS "-O2")
 
 add_library(tree
-    src/tree/tree.c
+    src/tree.c
 )
 
 target_include_directories(tree PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
 add_library(heap
-    src/heap/heap.c
+    src/heap.c
 )
 
 target_include_directories(heap PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
 add_library(huffman_tree
-    src/huffman_tree/huffman_tree.c
+    src/huffman_tree.c
 )
 
 target_include_directories(huffman_tree PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
 add_library(encode
-    src/encode/encode.c
+    src/encode.c
 )
 
 target_include_directories(encode PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
 add_library(decode
-    src/decode/decode.c
+    src/decode.c
 )
 
 target_include_directories(decode PUBLIC ${CMAKE_SOURCE_DIR}/include)
 
 add_library(error
-    src/error/error.c
+    src/error.c
 )
 
 target_include_directories(error PUBLIC ${CMAKE_SOURCE_DIR}/include)

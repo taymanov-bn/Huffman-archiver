@@ -2,43 +2,43 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include "tree/tree.h"
-#include "heap/heap.h"
-#include "huffman_tree/huffman_tree.h"
-#include "error/error.h"
+#include "tree.h"
+#include "heap.h"
+#include "huffman_tree.h"
+#include "error.h"
 
-void test_frequency_counter(char* filename, int* frequency) {
-  int* freq = frequency_counter(filename);
-  int result = 1; // 1 для того, чтобы в цикле не было проблем
+void test_frequency_counter(char* filename, size_t* frequency) {
+  size_t* freq = frequency_counter(filename);
+  int result = 1; 
   for (int i = 0; i < 256; i++) {
     result = result && (freq[i] == frequency[i]);
-  } // проверка на одинаковую частоту байтов
+  } 
 
   free(freq);
   assert(result);
   printf("test_frequency_counter PASSED\n");
 }
 
-void test_heap_build_freq(int* frequency) {
+void test_heap_build_freq(size_t* frequency) {
   Heap* heap_freq = heap_build_freq(frequency);
 
   if (!heap_freq) return;
 
-  int result = 1; // аналогично
-  int freq_counter = 0;
+  int result = 1; 
+  size_t freq_counter = 0;
 
   for (int i = 0; i < 256; i++) {
-    if (frequency[i] > 0) freq_counter++; // подсчет количества байтов имеющих частоту больше 0
+    if (frequency[i] > 0) freq_counter++; 
   }
 
   for (int i = 0; i < heap_freq->size; i++) {
-    result = result && (heap_freq->arr[0]->frequency <= heap_freq->arr[i]->frequency); // проверка на приоритетность очереди
+    result = result && (heap_freq->arr[0]->frequency <= heap_freq->arr[i]->frequency); 
   }
 
-  result = result && (heap_freq->size == freq_counter); // проверка, что размер кучи равен количеству байтов у которых частота > 0 
+  result = result && (heap_freq->size == freq_counter); 
 
   for (int i = 0; i < heap_freq->size; i++) {
-    free_tree(heap_freq->arr[i]); // освобождение узлов внутри кучи
+    free_tree(heap_freq->arr[i]); 
   }
 
   free_heap(heap_freq);
@@ -47,24 +47,22 @@ void test_heap_build_freq(int* frequency) {
 }
 
 
-void test_build_huffman_tree(Heap* heap, int* freq) {
+void test_build_huffman_tree(Heap* heap, size_t* freq) {
   Node* huffman_tree = build_huffman_tree(heap);
   if (!huffman_tree) return;
-  int sum = 0;
-  int result = 1; // аналогично 
+  size_t sum = 0;
+  int result = 1; 
   
   for (int i = 0; i < 256; i++) {
     sum += freq[i];
-  } // проверка суммы частот чтобы дальше проверить корень созданного дерева 
+  } 
 
-result = result && (huffman_tree->frequency == sum); // а вот и проверка 
+  result = result && (huffman_tree->frequency == sum); 
   
   free_tree(huffman_tree);
 
   assert(result);
   printf("test_build_huffman_tree PASSED \n");
-
-
 }
 
 void test_symbols_code(Node* root) {
@@ -75,15 +73,12 @@ void test_symbols_code(Node* root) {
   
   for (int i = 0; i < 256; i++) {
     for (int j = 0; j < 256; j++) {
-      // двойной цикл чтобы проверить префиксы 
       if (i == j) continue;
-      if (codes[i] && codes[j]) { // проверка на то, что они оба не NULL
-        // проверка, что закодированный код (байт) не является началом другого
+      if (codes[i] && codes[j]) { 
         result = result && (strncmp(codes[i], codes[j], strlen(codes[i])) != 0);
       }
     }
   }
-
   for (int i = 0; i < 256; i++) {
     free(codes[i]);
   }
@@ -93,15 +88,11 @@ void test_symbols_code(Node* root) {
 
   assert(result);
   printf("test_symbols_code PASSED\n");
-
 }
 
 
 
 int main() {
-
-  // тест функции test_frequency_counte
-  
   FILE* freq_file = fopen("testfile.txt", "w");
   if (!freq_file) {
     print_error("Failed to open freq test file");
@@ -110,13 +101,12 @@ int main() {
   fprintf(freq_file, "aababccc");
   fclose(freq_file);
 
-  int freq_counter[256] = { ['a'] = 3, ['b'] = 2, ['c'] = 3 };
+  size_t freq_counter[256] = { ['a'] = 3, ['b'] = 2, ['c'] = 3 };
   
   test_frequency_counter("testfile.txt", freq_counter);
 
-  // тест test_heap_build_freq
   
-  int* freq_heap = calloc(256, sizeof(int*));
+  size_t* freq_heap = calloc(256, sizeof(size_t));
   if (!freq_heap) {
     print_error("Failed to allocate memory for freq_heap test");
     return 1;
@@ -126,8 +116,6 @@ int main() {
   freq_heap['c'] = 2;
   test_heap_build_freq(freq_heap);
   free(freq_heap);
-
-  // тест test_build_huffman_tree
     
   FILE* file_huffman = fopen("testhuffman.txt", "w");
   if (!file_huffman) {
@@ -137,7 +125,7 @@ int main() {
   fprintf(file_huffman, "hello world!");
   fclose(file_huffman);
 
-  int* freq_huffman = frequency_counter("testhuffman.txt");
+  size_t* freq_huffman = frequency_counter("testhuffman.txt");
   if (!freq_huffman) {
     return 1;
   }
@@ -147,9 +135,6 @@ int main() {
   }
   test_build_huffman_tree(heap_huffman, freq_huffman);
   free(freq_huffman);
-
-
-  // тест на test_symbols_code 
   
   FILE* file_codes = fopen("testcodes.txt", "w");
   if (!file_codes) {
@@ -160,7 +145,7 @@ int main() {
   fprintf(file_codes, "huffman codes test hello world!");
   fclose(file_codes);
 
-  int* freq_codes = frequency_counter("testcodes.txt");
+  size_t* freq_codes = frequency_counter("testcodes.txt");
   if (!freq_codes) {
     return 1;
   }
